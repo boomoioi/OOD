@@ -1,0 +1,1 @@
+inp_row = input()
