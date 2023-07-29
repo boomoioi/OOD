@@ -42,7 +42,6 @@ def bfs(matrix, f_pos):
     q = []
     q.append(f_pos)
     while q:
-        
         print("Queue:", q)
         latest = q.pop(0)
         x = latest[0]
@@ -52,13 +51,15 @@ def bfs(matrix, f_pos):
             print(x, y)
             return 1  
         for add in adder:
-            if isokay(matrix, x+add[0], y+add[1]) == 2:
+            status = isokay(matrix, x+add[0], y+add[1])
+            if status == 2:
                 print("Found the exit portal.")
                 return 1
-            if isokay(matrix, x+add[0], y+add[1]):
+            elif status:
                 q.append((x+add[0], y+add[1]))
                 passed[y+add[1]][x+add[0]] = 1
     print("Cannot reach the exit portal.")
     return 0
 
 bfs(matrix, pos)
+

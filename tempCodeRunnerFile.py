@@ -1,1 +1,0 @@
-inp_row = input()
