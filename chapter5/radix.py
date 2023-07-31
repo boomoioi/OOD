@@ -6,6 +6,7 @@ class Node:
     
 class LinkedList:
     def __init__(self, lst=[]):
+        
         self.head = None
         self.tail = None
         self.size = 0
@@ -67,6 +68,14 @@ class LinkedList:
         self.size -= 1
         return left
     
+    def moveToHeadRev(self, ll2):
+        while ll2.head:
+            self.prepend(ll2.popLeft())
+            
+    def moveToHead(self, ll2):
+        while ll2.tail:
+            self.prepend(ll2.pop())
+    
     def isEmpty(self):
         return self.head == None
     
@@ -78,13 +87,21 @@ class LinkedList:
             cur = cur.next
         return res[:-4]
     
+    def printBackward(self):
+        res = ""
+        cur = self.tail
+        while cur != None:
+            res += str(cur.val) + " "
+            cur = cur.prev
+        return res
+    
     def __str__(self):
         res = ""
         cur = self.head 
         while cur != None:
             res += str(cur.val) + " "
             cur = cur.next
-        return res[:-1]
+        return res
     
     def __len__(self):
         return self.size
@@ -114,14 +131,6 @@ def getNumAt(digit, num):
         num = num//10
         i+=1
     return res
-
-def moveToTail(ll1, ll2):
-    while ll2.head:
-        ll1.append(ll2.popLeft())
-        
-def moveToHead(ll1, ll2):
-    while ll2.tail:
-        ll1.prepend(ll2.pop())
     
 def radixSort(nums):
     max_digit = getMaxDigit(nums)
@@ -137,18 +146,21 @@ def radixSort(nums):
             node = ll.popLeft()
             num = node.val
             index = getNumAt(digit, num)
-            if num<=0:
-                neg[index].prepend(node)
+            if num<0:
+                neg[index].append(node)
             else:
                 pos[index].append(node)
-                
+        if digit == max_digit+1: 
+            for i in range(10):
+                ll.moveToHeadRev(neg[i])
+                ll.moveToHead(pos[i])
+            break
         print(f"Round : {digit}")
         for i in range(10):
-            moveToTail(pos[i], neg[i])
-            print(f"{i} : {pos[i]}")
-            moveToHead(ll, pos[i])
+            print(f"{i} : {pos[i]}{neg[i].printBackward()}")
+            ll.moveToHead(neg[i])
+            ll.moveToHead(pos[i])
         print("------------------------------------------------------------")
-        
     print(f"{digit-1} Time(s)")
     print(before)
     print(f"After  Radix Sort : {ll.out()}")
