@@ -1,16 +1,8 @@
 inp = input("Enter Matrix : ").split()
 temp = [row.split(",") for row in inp]
 matrix = [[int(x) for x in row] for row in temp]
-
-f = open("myfile.txt", "w")
-
-def writer(matrix):
-    f.write('[')
-    for row in matrix:
-        f.writelines(row.__str__() + "," + "\n")
-    f.write(']\n')
-writer(matrix)
-f.write('\n')
+for row in matrix:
+    print(row)
 
 def solver(matrix):
     if len(matrix)==2:
@@ -31,17 +23,16 @@ def solver(matrix):
                     temp_row.append(matrix[i][j])
                     temp_to_cal.append(matrix[i][j])
                 else:
-                    temp.append(" ")
+                    temp_row.append(" ")
             if i!=0:
                 to_cal.append(temp_to_cal)
             res.append(temp_row)
             
-        #file writer
-        writer(res)
-        f.write(((str(sym * matrix[0][target] * solver(to_cal))) + "\n"))
-        f.write("\n")
-        
+        for row in res:
+            print(row)
+        print(sym * matrix[0][target] * solver(to_cal))
+        print()
         det += sym * matrix[0][target] * solver(to_cal)
         sym *= -1
     return det
-f.write("Answer :" + str(solver(matrix)))
+print("Answer :" + str(solver(matrix)))
