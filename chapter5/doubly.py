@@ -51,6 +51,10 @@ class LinkedList:
             self.head = node
 
     def insert(self, pos, item):
+        if pos < 0:
+            pos = self.size()+pos
+        if pos<0:
+            return False
         if pos == 0 or self.head == None:
             self.addHead(item)
         else:
