@@ -1,2 +1,2 @@
 
-            tail = tail[1:]
+    print(f"Character : {st[pos-1]}")
